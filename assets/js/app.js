@@ -1,3 +1,9 @@
+/*global varName*/
+/*global Phaser*/
+/*global text*/
+/*global answers*/
+/*global correct*/
+
 /*
   * Phaser:
     - Tilemaps
@@ -120,24 +126,29 @@ function initGame() {
   });
 }
 
-/*
+//************
+
 function getScore() {
   // adjust score for +10 per correct choice, +0 per incorrect choice
-  if (answers = correct) {
+/*  if (answers = correct) {
     score += 10;
   } else {
     score * 1;
   }
-  
+ */
   text.setText("Score: " + score);
 } 
-*/
 
+//*************
+
+/*
 function Quiz(questions, answers) {
   var questions = questions;
   var answers = answers;
 }
+*/
 
+/*
 function getScore() {
   // adjust score for +10 per correct choice, +0 per incorrect choice
   if (answers == correct) {
@@ -148,3 +159,4 @@ function getScore() {
   
   text.setText("Score: " + score);
 } 
+*/
