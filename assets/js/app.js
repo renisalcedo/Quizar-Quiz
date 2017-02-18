@@ -148,3 +148,86 @@ function getScore() {
   
   text.setText("Score: " + score);
 } 
+
+//------------------------------------------------------------------------------------------------------------------
+$(function(){
+  // Quiz Controller interface
+  function Quiz(questions) {
+    this.score = 0;
+    this.questions = questions;
+    this.questionIndex = 0;
+  };
+
+  Quiz.prototype.getQuestionIndex = function() {
+    return this.questions[this.questionIndex];
+  };
+
+  Quiz.prototype.isEnded = function() {
+    return this.questions.length === this.questionIndex;
+  };
+
+  Quiz.prototype.choices = function(choices) {
+
+    if(this.getQuestionIndex().correctAnswer(choices)) {
+      this.score++;
+    }
+    quiz.questionIndex++;
+    console.log(this.score);
+  };
+
+  // Quiz Questions
+  function Question(text, choice, answer) {
+    this.text = text;
+    this.choice = choice;
+    this.answer = answer;
+  };
+
+  Question.prototype.correctAnswer = function(choice) {
+    return choice === this.answer;
+  };
+
+  // Quiz App
+  function populate() {
+    if(quiz.isEnded()) {
+      showScores();
+    }
+    else {
+      var element = $('#question');
+      element.text(quiz.getQuestionIndex().text);
+
+      var choices = quiz.getQuestionIndex().choice;
+      for(var i = 0; i < choices.length; i++) {
+        var element = $('#option' + i);
+        element.text(choices[i]);
+        guess('#ans' + i, choices[i]);
+      }
+      showProgress();
+    }
+  };
+
+  function guess(id, choice) {
+    console.log(id);
+    var answer = $(id);
+    answer.click(function() {
+      quiz.choices(choice);
+      populate();
+    });
+  };
+
+  function showProgress() {
+    var currentQuestionNumber = quiz.questionIndex+1;
+    var element = $('#progress');
+    element.text("Question " + currentQuestionNumber + " of " + quiz.questions.length);
+  };
+
+  function showScores() {
+    var gameOverHtml = "<h1>Result</h1>";
+    gameOverHtml += "<h2 id='score'> Your scores: " + quiz.score + "</h2>";
+    var element = document.getElementById("quiz-section");
+    element.innerHTML = gameOverHtml;
+  };
+
+  var questions = [ new Question("What is your favorite programming language?", ["C++", "Javascript", "C", "Java"], "Javascript") ];
+  var quiz = new Quiz(questions);
+  populate();
+});
