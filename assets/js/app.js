@@ -16,7 +16,7 @@ function preload() {
 
   // Objects Images
   game.load.image('cannon', 'assets/img/cannon.png');
-  
+
   // Buttons
   game.load.image('play', 'assets/img/play.png');
 }
@@ -40,13 +40,14 @@ function create() {
   cannons = game.add.group();
 
   // Initial Functionanilities
-  gameIntro();  
+  gameIntro();
 
   // * TESTING PURPOSES *
   //game.add.sprite(485, 650, 'cannon');
 
   // Makes the cannon solid
   cannons.enableBody = true;
+
   // Adds physics to the cannon
   cannons.physicsBodyType = Phaser.Physics.ARCADE;
 
@@ -66,8 +67,7 @@ function update() {
 function render() {}
 
 function fireCannon() {
-  if(game.time.now > cannonTime)
-  {
+  if(game.time.now > cannonTime) {
     cannon = cannons.getFirstExists(false);
 
     if(cannon)
@@ -80,8 +80,8 @@ function fireCannon() {
 }
 
 function gameIntro() {
-  button = game.add.button(game.world.centerX - 95, 400, 'play', initGame, this, 2, 1, 0);
-    
+  button = game.add.button(game.world.centerX - 195, 585, 'play', initGame, this, 2, 1, 0);
+
   var style = { font: "65px Arial", fill: "#ffffff", align: "center" };
 
   text = game.add.text(game.world.centerX, game.world.centerY, "Click Play To Begin !", style);
@@ -97,9 +97,9 @@ function gameIntro() {
 }
 
 function initGame() {
-  button.kill();  
+  button.kill();
   text.kill();
-  
+
   for (var i = 0; i < 20; i++)
   {
     var b = cannons.create(485, 650, 'cannon');
