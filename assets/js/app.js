@@ -13,7 +13,7 @@ var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'phaser-example', { preload: 
 function preload() {
   // Background Images
   game.load.image('space-map', 'assets/img/space-background.png');
-  
+
   // Objects Images
   game.load.image('cannon', 'assets/img/cannon.png');
 }
@@ -28,21 +28,23 @@ function create() {
   // Maps
   game.physics.startSystem(Phaser.Physics.ARCADE);
   game.add.sprite(0, 0, 'space-map');
-  
+
   // Objects
   cannons = game.add.group();
-  
-  // Initial Functionanilities 
+
+  var button = game.make.button(game.world.centerX - 95, 400, 'button', removeGroup, this, 2, 1, 0);
+
+  // Initial Functionanilities
   initButton();
-  
+
   // * TESTING PURPOSES *
   //game.add.sprite(485, 650, 'cannon');
-  
+
   // Makes the cannon solid
   cannons.enableBody = true;
   // Adds physics to the cannon
   cannons.physicsBodyType = Phaser.Physics.ARCADE;
-  
+
   // Generate 19 cannons
   for (var i = 0; i < 20; i++)
   {
@@ -50,14 +52,14 @@ function create() {
     b.name = 'cannon' + i;
     b.exists = false;
     b.visible = false;
-    
+
     // Checks for walls
     b.checkWorldBounds = true;
   }
-    
+
   // Adds the key spacebar
   game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-  
+
 }
 
 function update() {
