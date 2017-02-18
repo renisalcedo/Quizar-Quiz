@@ -60,7 +60,7 @@ footer, header, hgroup, menu, nav, section {
 
 body {
   line-height: 1;
-  background-color: #777;
+  background-color: #fff;
   height: 100vh; }
 
 ol, ul {
@@ -114,8 +114,4 @@ section {
   display: inline-block;
   width: 100%; }
 
-.input-area {
-  position: absolute;
-  bottom: 0;
-  margin-bottom: 10em;
-}
+/*# sourceMappingURL=reset.css.map */
