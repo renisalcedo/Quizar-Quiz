@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 744.09447 1052.362179" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <filter id="e">
+   <feGaussianBlur stdDeviation="1.24"/>
+  </filter>
+  <filter id="f" x="-.26957" y="-.30644" width="1.5391" height="1.6129">
+   <feGaussianBlur stdDeviation="38.67002"/>
+  </filter>
+  <filter id="d" x="-.13849" y="-.1769" width="1.277" height="1.3538">
+   <feGaussianBlur stdDeviation="9.21464"/>
+  </filter>
+  <filter id="c" x="-.47499" y="-.47884" width="1.95" height="1.9577">
+   <feGaussianBlur stdDeviation="70.40098"/>
+  </filter>
+  <radialGradient id="b" cx="350.71" cy="746.25" r="180.83" gradientTransform="matrix(.86752 -1.5458 1.4296 .80228 -1020.3 689.37)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#a00" offset="0"/>
+   <stop stop-color="#a00" stop-opacity="0" offset="1"/>
+  </radialGradient>
+  <radialGradient id="a" cx="314.7" cy="327.28" r="80.207" gradientTransform="matrix(.91461 -1.1669 1 .78383 -345.56 409.34)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#fff" offset="0"/>
+   <stop stop-color="#fff" stop-opacity="0" offset="1"/>
+  </radialGradient>
+ </defs>
+ <path transform="matrix(1.0012 0 0 .22783 -101.11 382.76)" d="m600 882.36c0 83.632-77.071 151.43-172.14 151.43s-172.14-67.797-172.14-151.43 77.071-151.43 172.14-151.43 172.14 67.797 172.14 151.43z" fill="#333" filter="url(#f)" stroke="#333" stroke-width=".823"/>
+ <path transform="matrix(1.0988 0 0 1.0836 -71.689 -382.48)" d="m528.57 705.93c0 97.439-79.629 176.43-177.86 176.43s-177.86-78.99-177.86-176.43 79.629-176.43 177.86-176.43 177.86 78.99 177.86 176.43z" stroke="#333" stroke-width=".823"/>
+ <path transform="matrix(1.0988 0 0 1.0836 -71.061 -384.02)" d="m528.57 705.93c0 97.439-79.629 176.43-177.86 176.43s-177.86-78.99-177.86-176.43 79.629-176.43 177.86-176.43 177.86 78.99 177.86 176.43z" fill="url(#b)" filter="url(#e)"/>
+ <path transform="matrix(1.3765 0 0 1.6394 -166.53 -222.99)" d="m222.25 332.52c6.3318-17.094 20.285-34.073 48.232-49.383 41.227-22.585 97.128-16.118 97.128-16.118l6.2006 3.9571c15.286-2.1557-12.576 85.384-67.068 111.74-21.788 10.537-52.644 10.666-68.488 3.5004-21.353-9.6562-23.595-33.201-16.004-53.694z" fill="url(#a)" filter="url(#d)" opacity=".97727" stroke="#333" stroke-width=".72528"/>
+ <path transform="matrix(.6998 0 0 .67352 112.43 -19.529)" d="m528.57 705.93c0 97.439-79.629 176.43-177.86 176.43s-177.86-78.99-177.86-176.43 79.629-176.43 177.86-176.43 177.86 78.99 177.86 176.43z" fill="#fff" filter="url(#c)" opacity=".31818"/>
+</svg>

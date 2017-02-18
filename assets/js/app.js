@@ -16,6 +16,9 @@ function preload() {
 
   // Objects Images
   game.load.image('cannon', 'assets/img/cannon.png');
+  
+  // Buttons
+  game.load.image('play', 'assets/img/play.png');
 }
 
 // empty cannons
@@ -32,10 +35,10 @@ function create() {
   // Objects
   cannons = game.add.group();
 
-  var button = game.make.button(game.world.centerX - 95, 400, 'button', removeGroup, this, 2, 1, 0);
+  var button = game.make.button(game.world.centerX - 95, 100, 'play', initGame, this, 2, 1, 0);
 
   // Initial Functionanilities
-  initButton();
+  // initButton();
 
   // * TESTING PURPOSES *
   //game.add.sprite(485, 650, 'cannon');
@@ -84,4 +87,8 @@ function fireCannon() {
       cannonTime = game.time.now + 150;
     }
   }
+}
+
+function initGame() {
+  console.log("Hello World");
 }
