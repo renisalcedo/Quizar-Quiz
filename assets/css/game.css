@@ -114,8 +114,13 @@ section {
   display: inline-block;
   width: 100%; }
 
+/* --------------------- */
+/* --- Input Styles ---- */
+/* --------------------- */
 .input-area {
   position: absolute;
   bottom: 0;
-  margin-bottom: 10em;
+  padding: 7.8em;
+  width: 69.3%;
+  background-color: #eee;
 }
