@@ -29,7 +29,9 @@ var keyboard;
 
 // Initializers
 var button;
-var text;
+var questions;
+var score = 0;
+var textScore;
 
 function create() {
 
@@ -39,12 +41,10 @@ function create() {
 
   // Objects
   cannons = game.add.group();
+  questions = game.add.group();
 
-  // Initial Functionanilities
+  // Initial Functionalities
   gameIntro();
-
-  // * TESTING PURPOSES *
-  //game.add.sprite(485, 650, 'cannon');
 
   // Makes the cannon solid
   cannons.enableBody = true;
@@ -54,15 +54,17 @@ function create() {
 
   // Adds the key spacebar
   game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-
 }
 
 function update() {
+  
   // Shoots a cannon everytime the space keyboard is down
   if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
   {
     fireCannon();
   }
+  
+    getScore();
 }
 
 function render() {}
@@ -71,8 +73,7 @@ function fireCannon() {
   if(game.time.now > cannonTime) {
     cannon = cannons.getFirstExists(false);
 
-    if(cannon)
-    {
+    if(cannon) {
       cannon.reset(cannon.x + 6, cannon.y - 8); // Deletes cannon after hiting wall
       cannon.body.velocity.y = -300; // Sets the velocity of the cannon
       cannonTime = game.time.now + 150;
@@ -81,7 +82,7 @@ function fireCannon() {
 }
 
 function gameIntro() {
-  button = game.add.button(game.world.centerX - 295, 215, 'play', initGame, this, 2, 1, 0);
+  button = game.add.button(game.world.centerX - 105, 495, 'play', initGame, this, 2, 1, 0);
 
   var style = { font: "65px Arial", fill: "#ffffff", align: "center" };
 
@@ -111,4 +112,39 @@ function initGame() {
     // Checks for walls
     b.checkWorldBounds = true;
   }
+    // Creates Score
+ textScore = game.add.text(game.world.centerX, game.world.centerY, "Score: "+score, {
+    font: "65px Arial",
+    fill: "#fff",
+    align: "left"
+  });
 }
+
+/*
+function getScore() {
+  // adjust score for +10 per correct choice, +0 per incorrect choice
+  if (answers = correct) {
+    score += 10;
+  } else {
+    score * 1;
+  }
+  
+  text.setText("Score: " + score);
+} 
+*/
+
+function Quiz(questions, answers) {
+  var questions = questions;
+  var answers = answers;
+}
+
+function getScore() {
+  // adjust score for +10 per correct choice, +0 per incorrect choice
+  if (answers == correct) {
+    textScore += 10;
+  } else {
+    textScore * 1;
+  }
+  
+  text.setText("Score: " + score);
+} 
