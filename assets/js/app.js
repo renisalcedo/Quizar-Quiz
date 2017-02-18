@@ -27,6 +27,10 @@ var cannon;
 var cannonTime = 0;
 var keyboard;
 
+// Initializers
+var button;
+var text;
+
 function create() {
   // Maps
   game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -35,10 +39,8 @@ function create() {
   // Objects
   cannons = game.add.group();
 
-  var button = game.make.button(game.world.centerX - 95, 100, 'play', initGame, this, 2, 1, 0);
-
   // Initial Functionanilities
-  // initButton();
+  gameIntro();  
 
   // * TESTING PURPOSES *
   //game.add.sprite(485, 650, 'cannon');
@@ -47,18 +49,6 @@ function create() {
   cannons.enableBody = true;
   // Adds physics to the cannon
   cannons.physicsBodyType = Phaser.Physics.ARCADE;
-
-  // Generate 19 cannons
-  for (var i = 0; i < 20; i++)
-  {
-    var b = cannons.create(485, 650, 'cannon');
-    b.name = 'cannon' + i;
-    b.exists = false;
-    b.visible = false;
-
-    // Checks for walls
-    b.checkWorldBounds = true;
-  }
 
   // Adds the key spacebar
   game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -89,6 +79,35 @@ function fireCannon() {
   }
 }
 
+function gameIntro() {
+  button = game.add.button(game.world.centerX - 95, 400, 'play', initGame, this, 2, 1, 0);
+    
+  var style = { font: "65px Arial", fill: "#ffffff", align: "center" };
+
+  text = game.add.text(game.world.centerX, game.world.centerY, "Click Play To Begin !", style);
+
+  text.anchor.set(0.5);
+
+  //  And now we'll color in some of the letters
+  text.addColor('#ffff00', 16);
+  text.addColor('#ffffff', 25);
+
+  text.addColor('#ff00ff', 28);
+  text.addColor('#ffffff', 32);
+}
+
 function initGame() {
-  console.log("Hello World");
+  button.kill();  
+  text.kill();
+  
+  for (var i = 0; i < 20; i++)
+  {
+    var b = cannons.create(485, 650, 'cannon');
+    b.name = 'cannon' + i;
+    b.exists = false;
+    b.visible = false;
+
+    // Checks for walls
+    b.checkWorldBounds = true;
+  }
 }
