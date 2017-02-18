@@ -120,7 +120,18 @@ section {
 .input-area {
   position: absolute;
   bottom: 0;
-  padding: 7.8em;
+  padding: 5.6em;
   width: 69.3%;
   background-color: #eee;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.input-area input {
+  margin-right: 4em;
+  border-radius: 10%;
+  padding: .5em;
+  color: #333;
 }
