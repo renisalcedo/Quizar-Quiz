@@ -80,7 +80,7 @@ function fireCannon() {
 }
 
 function gameIntro() {
-  button = game.add.button(game.world.centerX - 195, 585, 'play', initGame, this, 2, 1, 0);
+  button = game.add.button(game.world.centerX - 295, 215, 'play', initGame, this, 2, 1, 0);
 
   var style = { font: "65px Arial", fill: "#ffffff", align: "center" };
 
