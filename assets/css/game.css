@@ -114,19 +114,25 @@ section {
   display: inline-block;
   width: 100%; }
 
+/* ----------------------- */
+/* - Reusable Components - */
+/* ----------------------- */
+.text-center {
+  text-align: center;
+}
+
+.text-primary {
+  color: #428bca;
+}
+
 /* --------------------- */
 /* --- Input Styles ---- */
 /* --------------------- */
 .input-area {
-  position: absolute;
-  bottom: 0;
-  padding: 5.6em;
+  padding: 2.5em;
   width: 69.3%;
   background-color: #eee;
-}
-
-.text-center {
-  text-align: center;
+  margin: 0 auto;
 }
 
 .input-area input {
@@ -134,4 +140,9 @@ section {
   border-radius: 10%;
   padding: .5em;
   color: #333;
+}
+
+canvas {
+  display: block;
+  margin : auto;
 }

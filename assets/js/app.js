@@ -32,6 +32,7 @@ var button;
 var text;
 
 function create() {
+
   // Maps
   game.physics.startSystem(Phaser.Physics.ARCADE);
   game.add.sprite(0, 0, 'space-map');
