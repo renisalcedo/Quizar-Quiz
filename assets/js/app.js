@@ -116,6 +116,9 @@ function update() {
       getAnswer();
       i++;
     }
+    else if(i > quest.length) {
+      game.state.restart();
+    }
   }
 }
 
