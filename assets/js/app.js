@@ -93,8 +93,8 @@ function create() {
 var i = 0;
 function update() {
   if(playing == true) {
-
     game.physics.arcade.overlap(weapon.bullets, enemies, collisionHandler, null, this);
+    game.physics.arcade.overlap(enemies, sprite, wAns, null, this);
 
     // Shoots a cannon everytime the space keyboard is down
     if(game.time.now - cannonTime > 250) {
