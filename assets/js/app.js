@@ -195,6 +195,7 @@ function getAnswer() {
 function rAns() {
   if(score > 50) {
     game.state.restart();
+    console.log('cono');
   }
   else {
     weapon.fire();
