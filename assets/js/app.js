@@ -10,6 +10,13 @@
 // Initialization
 var playing = false;
 var questioning = false;
+var quizText;
+
+// Question for Quiz
+var quest = ["Is the Nucleus the brain of the Cell?", "Is the Mitochondria the powerhouse of the cell?",
+            "Does the Mitochondria stores food, water, and waste in the cell?", "Does Ribosome turns amino acids into proteins?",
+            "Does Endoplasmic Reticulum transports materials throughout the cell?"];  
+ 
 
 var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update});
 
@@ -95,7 +102,6 @@ function update() {
     // Shoots a cannon everytime the space keyboard is down
     if(game.time.now - cannonTime > 250) {
       cannonTime = game.time.now;
-      weapon.fire();
     }
     
     if(game.time.now - enemyTime > 1350) {
@@ -104,10 +110,7 @@ function update() {
     }
     
     // Quiz Sections
-    var quest = ["Is the Nucleus the brain of the Cell?", "Is the Mitochondria the powerhouse of the cell?",
-                "Does the Mitochondria stores food, water, and waste in the cell?", "Does Ribosome turns amino acids into proteins?",
-                "Does Endoplasmic Reticulum transports materials throughout the cell?"];  
-      
+     
     if(!questioning && i < quest.length) {
       getQuiz(quest[i]);
       getAnswer();
@@ -150,8 +153,11 @@ function gameIntro() {
 function initGame() {
   button.kill();
   text.kill();
-  
   playing = true;
+  
+  // Quiz initialization
+  var qStyle = { font: "35px Arial", fill: "#eee", align: "center" };
+  quizText = game.add.text(game.world.centerX, game.world.centerY+185, quest[0], qStyle);
 
   // Generated Enemies
   for (var i = 0; i < 25; i++) {
@@ -168,33 +174,20 @@ function initGame() {
   var style = {font: "65px Arial", fill: "#fff", align: "left"};
   var scur = "Score: "+score;
   textScore = game.add.text(game.world.centerX-585, game.world.centerY-360, scur, style);
-  
-  weapon.autofire = true;
 }
 
 function getScore() {
-  // adjust score for +10 per correct choice, +0 per incorrect choice
-/*  if (answers = correct) {
-    score += 10;
-  } else {
-    score * 1;
-  }
- */
   textScore.setText("Score: " + score);
-  
 } 
 
 function collisionHandler (bullet, enemies) {
   bullet.kill();
   enemies.kill();
-  score+=1;
   getScore();
 }
 
 function getQuiz(quest) {
-  var style = { font: "65px Arial", fill: "#eee", align: "center" };
   
-  quizText = game.add.text(game.world.centerX, game.world.centerY+185, quest, style);
   quizText.anchor.set(0.5);
   // Updates Question to current
   quizText.setText(quest);
@@ -202,27 +195,23 @@ function getQuiz(quest) {
 }
 
 function getAnswer() {
-  var ansT = game.add.button(game.world.centerX - 290, 602, 'true', initGame, this, 2, 1, 0);
-  var ansF = game.add.button(game.world.centerX + 95, +602, 'false', initGame, this, 2, 1, 0);
+  var ansT = game.add.button(game.world.centerX - 290, 602, 'true', rAns, this, 2, 1, 0);
+  var ansF = game.add.button(game.world.centerX + 95, +602, 'false', wAns, this, 2, 1, 0);
 }
 
-
-/*
-function Quiz(questions, answers) {
-  var questions = questions;
-  var answers = answers;
+function rAns() {
+  weapon.fire();
+  score+=10 ;
+  questioning = false;
 }
-*/
 
-/*
-function getScore() {
-  // adjust score for +10 per correct choice, +0 per incorrect choice
-  if (answers == correct) {
-    textScore += 10;
-  } else {
-    textScore * 1;
+function wAns(){
+  if(score < 0) {
+    game.state.restart();
   }
-  
-  text.setText("Score: " + score);
+  else {
+    score-=5;
+    questioning = false;
+    console.log("You are wrong");
+  }
 }
-*/
