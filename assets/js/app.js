@@ -190,7 +190,7 @@ function collisionHandler (bullet, enemies) {
 function getQuiz(quest) {
   var style = { font: "65px Arial", fill: "#ffffff", align: "center" };
   
-  quizText = game.add.text(game.world.centerX, game.world.centerY, quest, style);
+  quizText = game.add.text(game.world.centerX, game.world.centerY+185, quest, style);
   quizText.anchor.set(0.5);
   // Updates Question to current
   quizText.setText(quest);
