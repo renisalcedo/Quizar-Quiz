@@ -96,21 +96,23 @@ function update() {
     }
     
     if(game.time.now - enemyTime > 1350) {
-      releaseEnemey();
+      releaseEnemy();
       enemyTime = game.time.now;
     }
     
     // Quiz Sections
-    var quest = ["Is the Nucleus the brain of the Cell?", "Is the Mitochondria the powerhouse of the cell?", "Question 3:", "Question 4:"];  
+    var quest = ["Is the Nucleus the brain of the Cell?", "Is the Mitochondria the powerhouse of the cell?",
+                "Does the Mitochondria stores food, water, and waste in the cell?", "Does Ribosome turns amino acids into proteins?",
+                "Does Endoplasmic Reticulum transports materials throughout the cell?"];  
       
-    if(!questioning && i < 4) {
+    if(!questioning && i < quest.length) {
       getQuiz(quest[i]);
       i++;
     }
   }
 }
 
-function releaseEnemey() {
+function releaseEnemy() {
   enemy = enemies.getFirstExists(false);
   const enemyX = enemy.x+605;
   const enemyY = enemy.y-300;
