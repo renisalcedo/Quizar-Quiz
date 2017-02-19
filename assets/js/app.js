@@ -193,9 +193,11 @@ function getAnswer() {
 }
 
 function rAns() {
+  // Restart the game at score > 50
   if(score > 50) {
+    playing = false;
     game.state.restart();
-    console.log('cono');
+    initGame();
   }
   else {
     weapon.fire();
@@ -205,8 +207,11 @@ function rAns() {
 }
 
 function wAns(){
+  // Restart the game at score < 0
   if(score < 0) {
+    playing = false;
     game.state.restart();
+    initGame();
   }
   else {
     score-=5;
