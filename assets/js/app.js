@@ -163,3 +163,39 @@ function getScore() {
   text.setText("Score: " + score);
 }
 */
+
+// ------------------------------------------------------
+// Quiz Controller interface
+function Quiz(questions) {
+  this.score = 0;
+  this.questions = questions;
+  this.questionIndex = 0;
+};
+
+Quiz.prototype.getQuestionIndex = function() {
+  return this.questions[this.questionIndex];
+};
+
+Quiz.prototype.isEnded = function() {
+  return this.questions.length === this.questionIndex;
+};
+
+Quiz.prototype.choices = function(choices) {
+
+  if(this.getQuestionIndex().correctAnswer(choices)) {
+    this.score++;
+  }
+  quiz.questionIndex++;
+  console.log(this.score);
+};
+
+// Quiz Questions
+function Question(text, choice, answer) {
+  this.text = text;
+  this.choice = choice;
+  this.answer = answer;
+};
+
+Question.prototype.correctAnswer = function(choice) {
+  return choice === this.answer;
+};
