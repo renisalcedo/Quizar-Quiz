@@ -17,14 +17,17 @@ function preload() {
   // Background Images
   game.load.image('space-map', 'assets/img/space-background.png');
 
-  // Objects Images
+  // Objects Images and sound
   game.load.image('cannon', 'assets/img/cannon.png');
   game.load.image('enemy', 'assets/img/alien.png');
   game.load.image('ship', 'assets/img/spaceship.png');
+  game.load.audio('music', 'assets/music/bgmusic.mp3');
 
   // Buttons
   game.load.image('play', 'assets/img/play.png');
-  game.load.audio('music', 'assets/music/bgmusic.mp3');
+  game.load.image('true', 'assets/img/true-button.png');
+  game.load.image('false', 'assets/img/false-button.png');
+  
 }
 
 // empty cannons
@@ -107,6 +110,7 @@ function update() {
       
     if(!questioning && i < quest.length) {
       getQuiz(quest[i]);
+      getAnswer();
       i++;
     }
   }
@@ -188,7 +192,7 @@ function collisionHandler (bullet, enemies) {
 }
 
 function getQuiz(quest) {
-  var style = { font: "65px Arial", fill: "#ffffff", align: "center" };
+  var style = { font: "65px Arial", fill: "#eee", align: "center" };
   
   quizText = game.add.text(game.world.centerX, game.world.centerY+185, quest, style);
   quizText.anchor.set(0.5);
@@ -197,7 +201,11 @@ function getQuiz(quest) {
   questioning = true;
 }
 
-//*************
+function getAnswer() {
+  var ansT = game.add.button(game.world.centerX - 290, 602, 'true', initGame, this, 2, 1, 0);
+  var ansF = game.add.button(game.world.centerX + 95, +602, 'false', initGame, this, 2, 1, 0);
+}
+
 
 /*
 function Quiz(questions, answers) {
