@@ -9,6 +9,7 @@
 
 // Initialization
 var playing = false;
+var questioning = false;
 
 var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update});
 
@@ -45,6 +46,7 @@ var enemyTime = 150;
 
 function create() {
   //Background Music
+  //Music name: Jim Yosef - Firefly NCS Release
   music = game.add.audio('music');
 	music.play();
 	
@@ -73,10 +75,14 @@ function create() {
   weapon.trackSprite(sprite, 0, 0, true);
   // Initial Functionalities
   gameIntro();
+  
 
   // Adds the key spacebar
   game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 }
+
+// Updater
+var i = 0;
 
 function update() {
   if(playing == true) {
@@ -92,6 +98,14 @@ function update() {
     if(game.time.now - enemyTime > 1350) {
       releaseEnemey();
       enemyTime = game.time.now;
+    }
+    
+    // Quiz Sections
+    var quest = ["Is the Nucleus the brain of the Cell?", "Is the Mitochondria the powerhouse of the cell?", "Question 3:", "Question 4:"];  
+      
+    if(!questioning && i < 4) {
+      getQuiz(quest[i]);
+      i++;
     }
   }
 }
@@ -113,9 +127,7 @@ function gameIntro() {
   button = game.add.button(game.world.centerX - 105, 495, 'play', initGame, this, 2, 1, 0);
 
   var style = { font: "65px Arial", fill: "#ffffff", align: "center" };
-
   text = game.add.text(game.world.centerX, game.world.centerY, "Click Play To Begin !", style);
-
   text.anchor.set(0.5);
 
   //  And now we'll color in some of the letters
@@ -171,6 +183,16 @@ function collisionHandler (bullet, enemies) {
   enemies.kill();
   score+=1;
   getScore();
+}
+
+function getQuiz(quest) {
+  var style = { font: "65px Arial", fill: "#ffffff", align: "center" };
+  
+  quizText = game.add.text(game.world.centerX, game.world.centerY, quest, style);
+  quizText.anchor.set(0.5);
+  // Updates Question to current
+  quizText.setText(quest);
+  questioning = true;
 }
 
 //*************
