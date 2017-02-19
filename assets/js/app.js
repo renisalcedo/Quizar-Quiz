@@ -73,7 +73,7 @@ function create() {
 
   // Turrets
   weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-  weapon.bulletSpeed = 200;
+  weapon.bulletSpeed = 350;
   weapon.fireRate = 3;
 
   sprite = this.add.sprite(400, 300, 'ship');
@@ -101,7 +101,7 @@ function update() {
       cannonTime = game.time.now;
     }
 
-    if(game.time.now - enemyTime > 1350) {
+    if(game.time.now - enemyTime > 1550) {
       releaseEnemy();
       enemyTime = game.time.now;
     }
