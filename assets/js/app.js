@@ -196,8 +196,8 @@ function rAns() {
   // Restart the game at score > 50
   if(score > 50) {
     playing = false;
-    game.state.restart();
     initGame();
+    game.state.restart();
   }
   else {
     weapon.fire();
@@ -210,8 +210,8 @@ function wAns(){
   // Restart the game at score < 0
   if(score < 0) {
     playing = false;
-    game.state.restart();
     initGame();
+    game.state.restart();
   }
   else {
     score-=5;
