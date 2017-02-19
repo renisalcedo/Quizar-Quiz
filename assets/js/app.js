@@ -53,12 +53,12 @@ function create() {
   
   // Objects
   questions = game.add.group();
-  weapon = game.add.weapon(30, 'cannon');
+  weapon = game.add.weapon(1, 'cannon');
   
   // Turrets
   weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-  weapon.bulletSpeed = 600;
-  weapon.fireRate = 100;
+  weapon.bulletSpeed = 200;
+  weapon.fireRate = 8;
   
   sprite = this.add.sprite(400, 300, 'ship');
   sprite.anchor.set(0.5);
@@ -74,13 +74,14 @@ function create() {
 
 function update() {
   if(playing == true) {
+    
+    game.physics.arcade.overlap(weapon.bullets, enemies, collisionHandler, null, this);
+    
     // Shoots a cannon everytime the space keyboard is down
-    if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && (game.time.now - cannonTime > 250)) {
+    if(game.time.now - cannonTime > 250) {
       cannonTime = game.time.now;
-      score+=1;
       weapon.fire();
     }
-    getScore();
     
     if(game.time.now - enemyTime > 2850) {
       releaseEnemey();
@@ -143,6 +144,8 @@ function initGame() {
   var style = {font: "65px Arial", fill: "#fff", align: "left"};
   var scur = "Score: "+score;
   textScore = game.add.text(game.world.centerX-585, game.world.centerY-360, scur, style);
+  
+  weapon.autofire = true;
 }
 
 function getScore() {
@@ -156,6 +159,13 @@ function getScore() {
   textScore.setText("Score: " + score);
   
 } 
+
+function collisionHandler (bullet, enemies) {
+  bullet.kill();
+  enemies.kill();
+  score+=1;
+  getScore();
+}
 
 //*************
 
