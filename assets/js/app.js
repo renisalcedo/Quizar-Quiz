@@ -23,6 +23,7 @@ function preload() {
 
   // Buttons
   game.load.image('play', 'assets/img/play.png');
+  game.load.audio('dank', 'assets/dank.mp3');
 }
 
 // empty cannons
@@ -188,54 +189,3 @@ function getScore() {
   text.setText("Score: " + score);
 }
 */
-
-// Quiz Controller interface
-function Quiz(questions) {
-  this.score = 0;
-  this.questions = questions;
-  this.questionIndex = 0;
-}
-
-Quiz.prototype.getQuestionIndex = function() {
-  return this.questions[this.questionIndex];
-};
-
-Quiz.prototype.isEnded = function() {
-  return this.questions.length === this.questionIndex;
-};
-
-Quiz.prototype.choices = function(choices) {
-
-  if(this.getQuestionIndex().correctAnswer(choices)) {
-    this.score++;
-  }
-  quiz.questionIndex++;
-  console.log(this.score);
-};
-
-// Quiz Questions
-function Question(text, choice, answer) {
-  this.text = text;
-  this.choice = choice;
-  this.answer = answer;
-}
-
-Question.prototype.correctAnswer = function(choice) {
-  return choice === this.answer;
-};
-
-// Quiz Implementation
-function initQuestions() {
-  var question = new Question("This is a sample text?", ['yes', 'no'], 'yes');
-  var quiz = Quiz(question);
-  
-  for (var i = 0; i < 10; i++) {
-    text = game.add.text(game.world.centerX, game.world.centerY, quiz, {
-      font: "65px Arial",
-      fill: "#ff0044",
-      align: "center"
-    });
-
-    text.anchor.setTo(0.5, 0.5);
-  }
-}
