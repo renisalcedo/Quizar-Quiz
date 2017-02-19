@@ -10,7 +10,7 @@
 // Initialization
 var playing = false;
 
-var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
+var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update});
 
 function preload() {
   // Background Images
@@ -23,7 +23,7 @@ function preload() {
 
   // Buttons
   game.load.image('play', 'assets/img/play.png');
-  game.load.audio('dank', 'assets/dank.mp3');
+  game.load.audio('music', 'assets/music/bgmusic.mp3');
 }
 
 // empty cannons
@@ -42,7 +42,12 @@ var enemy;
 var enemies;
 var enemyTime = 150;
 
+
 function create() {
+  //Background Music
+  music = game.add.audio('music');
+	music.play();
+	
   // Maps
   game.physics.startSystem(Phaser.Physics.ARCADE);
   game.add.sprite(0, 0, 'space-map');
@@ -59,7 +64,7 @@ function create() {
   // Turrets
   weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
   weapon.bulletSpeed = 200;
-  weapon.fireRate = 8;
+  weapon.fireRate = 3;
   
   sprite = this.add.sprite(400, 300, 'ship');
   sprite.anchor.set(0.5);
@@ -84,21 +89,21 @@ function update() {
       weapon.fire();
     }
     
-    if(game.time.now - enemyTime > 2850) {
+    if(game.time.now - enemyTime > 1350) {
       releaseEnemey();
       enemyTime = game.time.now;
     }
   }
 }
 
-function render() {}
-
 function releaseEnemey() {
   enemy = enemies.getFirstExists(false);
+  const enemyX = enemy.x+605;
+  const enemyY = enemy.y-300;
   
   if(enemy) {
-    enemy.reset(enemy.x + 605, enemy.y-300 ); // Deletes cannon after hiting wall
-    enemy.body.velocity.x = -55; // Sets the velocity of the cannon
+    enemy.reset(enemyX, enemyY-100); // Generate Enemy at position
+    enemy.body.velocity.x = -85; // Sets the velocity of the Enemy
   }
 }
 
@@ -131,8 +136,8 @@ function initGame() {
   playing = true;
 
   // Generated Enemies
-  for (var i = 0; i < 20; i++) {
-    var b = enemies.create(485, 650, 'enemy');
+  for (var i = 0; i < 25; i++) {
+    var b = enemies.create(480, 650, 'enemy');
     b.name = 'enemy' + i;
     b.exists = false;
     b.visible = false;
