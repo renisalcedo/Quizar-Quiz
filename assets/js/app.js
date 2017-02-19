@@ -19,14 +19,13 @@ function preload() {
   // Objects Images
   game.load.image('cannon', 'assets/img/cannon.png');
   game.load.image('enemy', 'assets/img/alien.png');
+  game.load.image('ship', 'assets/img/spaceship.png');
 
   // Buttons
   game.load.image('play', 'assets/img/play.png');
 }
 
 // empty cannons
-var cannons;
-var cannon;
 var cannonTime = 75;
 var keyboard;
 
@@ -51,19 +50,23 @@ function create() {
   enemies = game.add.group();
   enemies.enableBody = true;
   enemies.physicsBodyType = Phaser.Physics.ARCADE;
-
+  
   // Objects
-  cannons = game.add.group();
   questions = game.add.group();
-
+  weapon = game.add.weapon(30, 'cannon');
+  
+  // Turrets
+  weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+  weapon.bulletSpeed = 600;
+  weapon.fireRate = 100;
+  
+  sprite = this.add.sprite(400, 300, 'ship');
+  sprite.anchor.set(0.5);
+  game.physics.arcade.enable(sprite);
+   
+  weapon.trackSprite(sprite, 0, 0, true);
   // Initial Functionalities
   gameIntro();
-
-  // Makes the cannon solid
-  cannons.enableBody = true;
-
-  // Adds physics to the cannon
-  cannons.physicsBodyType = Phaser.Physics.ARCADE;
 
   // Adds the key spacebar
   game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -73,10 +76,9 @@ function update() {
   if(playing == true) {
     // Shoots a cannon everytime the space keyboard is down
     if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && (game.time.now - cannonTime > 250)) {
-      fireCannon();
       cannonTime = game.time.now;
       score+=1;
-     // can_shoot = false;
+      weapon.fire();
     }
     getScore();
     
@@ -88,16 +90,6 @@ function update() {
 }
 
 function render() {}
-
-function fireCannon() {
-    //can_shoot = true;
-    cannon = cannons.getFirstExists(false);
-
-    if(cannon) {
-      cannon.reset(cannon.x + 6, cannon.y - 8); // Deletes cannon after hiting wall
-      cannon.body.velocity.y = -300; // Sets the velocity of the cannon
-    }
-}
 
 function releaseEnemey() {
   enemy = enemies.getFirstExists(false);
@@ -136,17 +128,6 @@ function initGame() {
   
   playing = true;
 
-  // Generated Cannons
-  for (var i = 0; i < 20; i++) {
-    var b = cannons.create(485, 650, 'cannon');
-    b.name = 'cannon' + i;
-    b.exists = false;
-    b.visible = false;
-
-    // Checks for walls
-    b.checkWorldBounds = true;
-  }
-  
   // Generated Enemies
   for (var i = 0; i < 20; i++) {
     var b = enemies.create(485, 650, 'enemy');
