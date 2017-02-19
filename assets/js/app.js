@@ -18,6 +18,7 @@ function preload() {
 
   // Objects Images
   game.load.image('cannon', 'assets/img/cannon.png');
+  game.load.image('enemy', 'assets/img/alien.png');
 
   // Buttons
   game.load.image('play', 'assets/img/play.png');
@@ -26,7 +27,7 @@ function preload() {
 // empty cannons
 var cannons;
 var cannon;
-var cannonTime = 51;
+var cannonTime = 75;
 var keyboard;
 
 // Initializers
@@ -36,11 +37,20 @@ var score = 0;
 var textScore;
 var can_shoot = true;
     
+// Enemy Values
+var enemy;
+var enemies;
+var enemyTime = 150;
 
 function create() {
   // Maps
   game.physics.startSystem(Phaser.Physics.ARCADE);
   game.add.sprite(0, 0, 'space-map');
+  
+  // Enemy
+  enemies = game.add.group();
+  enemies.enableBody = true;
+  enemies.physicsBodyType = Phaser.Physics.ARCADE;
 
   // Objects
   cannons = game.add.group();
@@ -69,6 +79,11 @@ function update() {
      // can_shoot = false;
     }
     getScore();
+    
+    if(game.time.now - enemyTime > 2850) {
+      releaseEnemey();
+      enemyTime = game.time.now;
+    }
   }
 }
 
@@ -82,6 +97,15 @@ function fireCannon() {
       cannon.reset(cannon.x + 6, cannon.y - 8); // Deletes cannon after hiting wall
       cannon.body.velocity.y = -300; // Sets the velocity of the cannon
     }
+}
+
+function releaseEnemey() {
+  enemy = enemies.getFirstExists(false);
+  
+  if(enemy) {
+    enemy.reset(enemy.x + 605, enemy.y-300 ); // Deletes cannon after hiting wall
+    enemy.body.velocity.x = -55; // Sets the velocity of the cannon
+  }
 }
 
 function gameIntro() {
@@ -112,8 +136,8 @@ function initGame() {
   
   playing = true;
 
-  for (var i = 0; i < 20; i++)
-  {
+  // Generated Cannons
+  for (var i = 0; i < 20; i++) {
     var b = cannons.create(485, 650, 'cannon');
     b.name = 'cannon' + i;
     b.exists = false;
@@ -122,13 +146,23 @@ function initGame() {
     // Checks for walls
     b.checkWorldBounds = true;
   }
+  
+  // Generated Enemies
+  for (var i = 0; i < 20; i++) {
+    var b = enemies.create(485, 650, 'enemy');
+    b.name = 'enemy' + i;
+    b.exists = false;
+    b.visible = false;
+
+    // Checks for walls
+    b.checkWorldBounds = true;
+  }
+  
   // Creates Score
   var style = {font: "65px Arial", fill: "#fff", align: "left"};
   var scur = "Score: "+score;
-  textScore = game.add.text(game.world.centerX, game.world.centerY, scur, style);
+  textScore = game.add.text(game.world.centerX-585, game.world.centerY-360, scur, style);
 }
-
-//************
 
 function getScore() {
   // adjust score for +10 per correct choice, +0 per incorrect choice
@@ -164,13 +198,12 @@ function getScore() {
 }
 */
 
-// ------------------------------------------------------
 // Quiz Controller interface
 function Quiz(questions) {
   this.score = 0;
   this.questions = questions;
   this.questionIndex = 0;
-};
+}
 
 Quiz.prototype.getQuestionIndex = function() {
   return this.questions[this.questionIndex];
@@ -194,8 +227,24 @@ function Question(text, choice, answer) {
   this.text = text;
   this.choice = choice;
   this.answer = answer;
-};
+}
 
 Question.prototype.correctAnswer = function(choice) {
   return choice === this.answer;
 };
+
+// Quiz Implementation
+function initQuestions() {
+  var question = new Question("This is a sample text?", ['yes', 'no'], 'yes');
+  var quiz = Quiz(question);
+  
+  for (var i = 0; i < 10; i++) {
+    text = game.add.text(game.world.centerX, game.world.centerY, quiz, {
+      font: "65px Arial",
+      fill: "#ff0044",
+      align: "center"
+    });
+
+    text.anchor.setTo(0.5, 0.5);
+  }
+}
