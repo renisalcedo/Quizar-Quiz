@@ -1,9 +1,3 @@
-/*global varName*/
-/*global Phaser*/
-/*global text*/
-/*global answers*/
-/*global correct*/
-
 /*
   * Phaser:
     - Tilemaps
@@ -14,6 +8,8 @@
 */
 
 // Initialization
+var playing = false;
+
 var game = new Phaser.Game(1280, 720, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update, render: render });
 
 function preload() {
@@ -30,7 +26,7 @@ function preload() {
 // empty cannons
 var cannons;
 var cannon;
-var cannonTime = 0;
+var cannonTime = 51;
 var keyboard;
 
 // Initializers
@@ -38,9 +34,10 @@ var button;
 var questions;
 var score = 0;
 var textScore;
+var can_shoot = true;
+    
 
 function create() {
-
   // Maps
   game.physics.startSystem(Phaser.Physics.ARCADE);
   game.add.sprite(0, 0, 'space-map');
@@ -63,31 +60,33 @@ function create() {
 }
 
 function update() {
-  
-  // Shoots a cannon everytime the space keyboard is down
-  if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
-  {
-    fireCannon();
-  }
-  
+  if(playing == true) {
+    // Shoots a cannon everytime the space keyboard is down
+    if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR) && (game.time.now - cannonTime > 250)) {
+      fireCannon();
+      cannonTime = game.time.now;
+      score+=1;
+     // can_shoot = false;
+    }
     getScore();
+  }
 }
 
 function render() {}
 
 function fireCannon() {
-  if(game.time.now > cannonTime) {
+    //can_shoot = true;
     cannon = cannons.getFirstExists(false);
 
     if(cannon) {
       cannon.reset(cannon.x + 6, cannon.y - 8); // Deletes cannon after hiting wall
       cannon.body.velocity.y = -300; // Sets the velocity of the cannon
-      cannonTime = game.time.now + 150;
     }
-  }
 }
 
 function gameIntro() {
+  console.log("introducing")
+  
   button = game.add.button(game.world.centerX - 105, 495, 'play', initGame, this, 2, 1, 0);
 
   var style = { font: "65px Arial", fill: "#ffffff", align: "center" };
@@ -102,11 +101,16 @@ function gameIntro() {
 
   text.addColor('#ff00ff', 28);
   text.addColor('#ffffff', 32);
+  
+
+  console.log("introduced")
 }
 
 function initGame() {
   button.kill();
   text.kill();
+  
+  playing = true;
 
   for (var i = 0; i < 20; i++)
   {
@@ -118,12 +122,10 @@ function initGame() {
     // Checks for walls
     b.checkWorldBounds = true;
   }
-    // Creates Score
- textScore = game.add.text(game.world.centerX, game.world.centerY, "Score: "+score, {
-    font: "65px Arial",
-    fill: "#fff",
-    align: "left"
-  });
+  // Creates Score
+  var style = {font: "65px Arial", fill: "#fff", align: "left"};
+  var scur = "Score: "+score;
+  textScore = game.add.text(game.world.centerX, game.world.centerY, scur, style);
 }
 
 //************
@@ -136,7 +138,8 @@ function getScore() {
     score * 1;
   }
  */
-  text.setText("Score: " + score);
+  textScore.setText("Score: " + score);
+  
 } 
 
 //*************
@@ -160,86 +163,3 @@ function getScore() {
   text.setText("Score: " + score);
 }
 */
-
-//------------------------------------------------------------------------------------------------------------------
-$(function(){
-  // Quiz Controller interface
-  function Quiz(questions) {
-    this.score = 0;
-    this.questions = questions;
-    this.questionIndex = 0;
-  };
-
-  Quiz.prototype.getQuestionIndex = function() {
-    return this.questions[this.questionIndex];
-  };
-
-  Quiz.prototype.isEnded = function() {
-    return this.questions.length === this.questionIndex;
-  };
-
-  Quiz.prototype.choices = function(choices) {
-
-    if(this.getQuestionIndex().correctAnswer(choices)) {
-      this.score++;
-    }
-    quiz.questionIndex++;
-    console.log(this.score);
-  };
-
-  // Quiz Questions
-  function Question(text, choice, answer) {
-    this.text = text;
-    this.choice = choice;
-    this.answer = answer;
-  };
-
-  Question.prototype.correctAnswer = function(choice) {
-    return choice === this.answer;
-  };
-
-  // Quiz App
-  function populate() {
-    if(quiz.isEnded()) {
-      showScores();
-    }
-    else {
-      var element = $('#question');
-      element.text(quiz.getQuestionIndex().text);
-
-      var choices = quiz.getQuestionIndex().choice;
-      for(var i = 0; i < choices.length; i++) {
-        var element = $('#option' + i);
-        element.text(choices[i]);
-        guess('#ans' + i, choices[i]);
-      }
-      showProgress();
-    }
-  };
-
-  function guess(id, choice) {
-    console.log(id);
-    var answer = $(id);
-    answer.click(function() {
-      quiz.choices(choice);
-      populate();
-    });
-  };
-
-  function showProgress() {
-    var currentQuestionNumber = quiz.questionIndex+1;
-    var element = $('#progress');
-    element.text("Question " + currentQuestionNumber + " of " + quiz.questions.length);
-  };
-
-  function showScores() {
-    var gameOverHtml = "<h1>Result</h1>";
-    gameOverHtml += "<h2 id='score'> Your scores: " + quiz.score + "</h2>";
-    var element = document.getElementById("quiz-section");
-    element.innerHTML = gameOverHtml;
-  };
-
-  var questions = [ new Question("What is your favorite programming language?", ["C++", "Javascript", "C", "Java"], "Javascript") ];
-  var quiz = new Quiz(questions);
-  populate();
-});
